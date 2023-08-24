@@ -11,7 +11,6 @@ export default function Titulo(props) {
 
 const styles = StyleSheet.create({
     View: {
-      flex: 1,
       backgroundColor: '#00ffff',
       alignItems: 'center',
       justifyContent: 'center',
@@ -20,11 +19,13 @@ const styles = StyleSheet.create({
 
     },
     Titulo: {
-        fontSize: 64,
+        fontSize: 96,
+        lineHeight: 96,
         fontWeight: '900'
     },
     Subtitulo: {
         fontSize: 32,
+        lineHeight: 32,
         fontWeight: '700',
     }
   });

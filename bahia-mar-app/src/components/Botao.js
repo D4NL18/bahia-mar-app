@@ -1,4 +1,7 @@
-import { Dimensions, StyleSheet, Text, View, Button, TouchableHighlight } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { Button } from 'react-native-paper';
+
+const largura = Dimensions.get("screen").width;
 
 export default function Botao(props) {
 
@@ -8,24 +11,39 @@ export default function Botao(props) {
       };
 
     return(
-        <TouchableHighlight style={buttonStyles}>
-                <Text style={styles.Texto}>{props.texto}</Text>
-        </TouchableHighlight>
+      <Button
+        mode='elevated'
+        style = {{marginTop: 10, borderRadius: 50}}
+        contentStyle = {props.tipo == "destaque" ? styles.BotaoDestaque : styles.Botao}
+        labelStyle = {props.tipo == "destaque" ? styles.TextoDestaque : styles.Texto}
+        >
+          {props.texto}
+        </Button>
     );
 }
 
 const styles = StyleSheet.create({
     Botao: {
-      flex: 1,
-      backgroundColor: '#00ffff',
-      alignItems: 'center',
-      justifyContent: 'center',
-      margin: 8
-      
-      
+      backgroundColor: '#86BBD8',
+      paddingVertical: 10,
+      width: largura * 0.8
+    },
+    BotaoDestaque: {
+      backgroundColor: '#33658A',
+      paddingVertical: 6,
+      paddingHorizontal: 20,
     },
     Texto: {
-        fontSize: 24,
-        fontWeight: '400',
+      fontSize: 24,
+      fontWeight: 'bold',
+      lineHeight: 24,
+      color: 'black'
+    },
+    TextoDestaque: {
+      fontSize: 32,
+      fontWeight: 'bold',
+      lineHeight: 32,
+      color: 'white',
+      height: 'auto',
     }
   });
