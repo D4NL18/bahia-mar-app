@@ -3,8 +3,8 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 export default function Titulo(props) {
 
     return(
-        <View style={styles.View}>
-            <Text style={props.tipo == "titulo" ? styles.Titulo : styles.Subtitulo}>{props.titulo}</Text>
+        <View style = {styles.View}>
+            <Text style = {props.tipo == "titulo" ? styles.Titulo : styles.Subtitulo}>{props.titulo}</Text>
         </View>
     );
 }

@@ -5,16 +5,10 @@ const largura = Dimensions.get("screen").width;
 
 export default function Botao(props) {
 
-    const buttonStyles = {
-        ...styles.Botao,
-        backgroundColor: props.backgroundColor,
-      };
-
     return(
       <Button
-        mode='elevated'
-        style = {{marginTop: 10, borderRadius: 50}}
-        contentStyle = {props.tipo == "destaque" ? styles.BotaoDestaque : styles.Botao}
+        mode = 'elevated'
+        style = {props.tipo == "destaque" ?  styles.BotaoDestaque : styles.Botao}
         labelStyle = {props.tipo == "destaque" ? styles.TextoDestaque : styles.Texto}
         >
           {props.texto}
@@ -24,14 +18,19 @@ export default function Botao(props) {
 
 const styles = StyleSheet.create({
     Botao: {
+      marginTop: 10,
+      borderRadius: 50,
       backgroundColor: '#86BBD8',
       paddingVertical: 10,
       width: largura * 0.8
     },
     BotaoDestaque: {
+      marginTop: 10,
+      borderRadius: 50,
       backgroundColor: '#33658A',
       paddingVertical: 6,
       paddingHorizontal: 20,
+      width: largura * 0.4
     },
     Texto: {
       fontSize: 24,
