@@ -10,6 +10,9 @@ export default function Botao(props) {
         mode = 'elevated'
         style = {props.tipo == "destaque" ?  styles.BotaoDestaque : styles.Botao}
         labelStyle = {props.tipo == "destaque" ? styles.TextoDestaque : styles.Texto}
+        onClick={() => {
+          props.onClick()
+        }}
         >
           {props.texto}
         </Button>
@@ -30,7 +33,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#33658A',
       paddingVertical: 6,
       paddingHorizontal: 20,
-      width: largura * 0.4
+      // width: largura * 0.4
     },
     Texto: {
       fontSize: 24,
