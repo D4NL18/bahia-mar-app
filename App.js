@@ -1,11 +1,12 @@
 import Menu from './src/views/Menu.js'
+import Login from './src/views/Login.js'
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
     <View style = {styles.container}>
-      <Text><Menu /></Text>
+      <Text> <Menu/> </Text>
       <StatusBar style="auto" />
     </View>
   );

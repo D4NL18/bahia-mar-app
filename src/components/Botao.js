@@ -10,9 +10,7 @@ export default function Botao(props) {
         mode = 'elevated'
         style = {props.tipo == "destaque" ?  styles.BotaoDestaque : styles.Botao}
         labelStyle = {props.tipo == "destaque" ? styles.TextoDestaque : styles.Texto}
-        onClick={() => {
-          props.onClick()
-        }}
+        onPress={props.onPress}
         >
           {props.texto}
         </Button>
