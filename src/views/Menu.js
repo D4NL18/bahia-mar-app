@@ -17,9 +17,6 @@ import { PaperProvider } from "react-native-paper";
 const altura = Dimensions.get("screen").height;
 
 export default function App() {
-  const [visible, setVisible] = useState("");
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
   
   return (
     <PaperProvider>
@@ -42,7 +39,7 @@ export default function App() {
         >
           <Botao texto="Cliente cadastrado" />
           <Botao texto="Cliente sem cadastro" />
-          <Botao texto="Sair" tipo="destaque" onPress={showModal} />
+          <Botao texto="Sair" tipo="destaque" />
         </View>
         <View style={{ flex: 2 }}></View>
       </ImageBackground>
@@ -60,3 +57,8 @@ const styles = StyleSheet.create({
     backgroundImage: background,
   },
 });
+
+
+// const [visible, setVisible] = useState("");
+// const showModal = () => setVisible(true);
+// const hideModal = () => setVisible(false);

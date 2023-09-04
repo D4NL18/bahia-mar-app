@@ -19,20 +19,25 @@ export default function Input(props) {
         mode="outlined"
         value={text}
         onChangeText={(text) => setText(text)}
-        selectionColor="#000"
-        outlineColor="#000"
-        activeOutlineColor="#000"
-        underlineColor="black"
+        selectionColor="#86BBD8"
+        outlineColor="#86BBD8"
+        activeOutlineColor="#86BBD8"
+        underlineColor="#86BBD8"
         activeUnderlineColor="black"
-        style={styles.input}
+        style={styles.Input}
+        outlineStyle={styles.Borda}
       />
   );
 }
 
 const styles = StyleSheet.create({
-  input: {
+  Input: {
     width: largura * 0.8,
-    backgroundColor: "#86BBD8",
+    backgroundColor: "white",
     margin: 20,
+    paddingLeft: 10
   },
+  Borda:{
+    borderRadius: 30
+  }
 });
