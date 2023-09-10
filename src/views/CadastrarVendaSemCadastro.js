@@ -28,12 +28,12 @@ export default function App({ navigation }) {
       <ImageBackground style={styles.entirePage} source={background} resizeMode="stretch">
         <View style={{ flex: 10, justifyContent: "center", alignItems: "center" }}>
           <View style={{ width: largura, alignItems: "center" }}>
-            <Image source={logo} ></Image>
+          <Titulo titulo="Cadastrar Venda" tipo="medio" />
           </View>
-          <Input label="Email"></Input>
-          <Input label="Senha"></Input>
-          <Botao texto="Entrar" tipo="destaque" onPress={() => navigation.navigate('Menu')} />
-          <Text onPress={() => navigation.navigate('RedefinirSenhaEmail')} style={{ marginTop: 10 }}>Esqueceu a senha? Clique aqui para recuperá-la</Text>
+          <Input label="Funcionário"></Input>
+          <Input label="Veículo"></Input>
+          <Input label="Forma de Pagamento"></Input>
+          <Botao texto="Seguir" tipo="destaque" onPress={() => navigation.navigate('CadastrarInfosCliente')} />
         </View>
       </ImageBackground>
     </PaperProvider>

@@ -16,8 +16,8 @@ import { PaperProvider } from "react-native-paper";
 
 const altura = Dimensions.get("screen").height;
 
-export default function App() {
-  
+export default function App({ navigation }) {
+
   return (
     <PaperProvider>
       <ImageBackground
@@ -29,7 +29,6 @@ export default function App() {
           <Titulo titulo="Menu" tipo="grande" />
           <Titulo titulo="Cadastro" tipo="pequeno" />
         </View>
-        {/* <Input label="exemplo" /> */}
         <View
           style={{
             flex: 4,
@@ -37,9 +36,16 @@ export default function App() {
             alignItems: "center",
           }}
         >
-          <Botao texto="Cliente cadastrado" />
-          <Botao texto="Cliente sem cadastro" />
-          <Botao texto="Sair" tipo="destaque" />
+          <Botao texto="Cliente cadastrado"
+            onPress={() => navigation.navigate('CadastrarVendaCadastrado')}
+          />
+          <Botao texto="Cliente sem cadastro"
+            onPress={() => navigation.navigate('CadastrarVendaSemCadastro')}
+          />
+          <Botao texto="Sair"
+            tipo="destaque"
+            onPress={() => navigation.navigate('Login')}
+          />
         </View>
         <View style={{ flex: 2 }}></View>
       </ImageBackground>
