@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { Dimensions, Text, StyleSheet, View } from "react-native";
 
 // import {

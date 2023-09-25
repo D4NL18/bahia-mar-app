@@ -6,7 +6,6 @@ import Mod from "../components/Mod";
 import background from "../images/background.png";
 import logo from '../images/logo.png';
 
-import { useState } from "react";
 import {
   Dimensions,
   StyleSheet,
@@ -32,7 +31,7 @@ export default function App({ navigation }) {
           </View>
           <Input label="Email"></Input>
           <Input label="Senha"></Input>
-          <Botao texto="Entrar" tipo="destaque" onPress={() => navigation.navigate('Menu')} />
+          <Botao texto="Entrar" tipo="destaque" onPress={() => navigation.navigate('FazerPedido')} />
           <Text onPress={() => navigation.navigate('RedefinirSenhaEmail')} style={{ marginTop: 10 }}>Esqueceu a senha? Clique aqui para recuperá-la</Text>
         </View>
       </ImageBackground>

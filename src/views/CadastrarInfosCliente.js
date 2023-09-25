@@ -6,7 +6,7 @@ import Mod from "../components/Mod";
 import background from "../images/background.png";
 import logo from '../images/logo.png';
 
-import { useState } from "react";
+
 import {
   Dimensions,
   StyleSheet,
