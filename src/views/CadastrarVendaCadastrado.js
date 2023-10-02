@@ -34,7 +34,7 @@ export default function App({ navigation }) {
           <Input label="Veículo"></Input>
           <Input label="Cliente"></Input>
           <Input label="Forma de Pagamento"></Input>
-          <Botao texto="Seguir" tipo="destaque" onPress={() => navigation.navigate('CadastrarVendaValor')} />
+          <Botao texto="Seguir" tipo="destaque" onPress={() => navigation.navigate('FazerPedidoFuncionario')} />
         </View>
       </ImageBackground>
     </PaperProvider>

@@ -8,6 +8,7 @@ import CadastrarVendaValor from './src/views/CadastrarVendaValor.js'
 import CadastrarInfosCliente from './src/views/CadastrarInfosCliente.js'
 import CadastrarEnderecoCliente from './src/views/CadastrarEnderecoCliente.js'
 import FazerPedido from './src/views/FazerPedido.js'
+import FazerPedidoFuncionario from './src/views/FazerPedidoFuncionario.js'
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -71,7 +72,11 @@ export default function App() {
           component={FazerPedido}
           options={{ headerShown: false }}
         />
-
+        <Stack.Screen
+          name="FazerPedidoFuncionario"
+          component={FazerPedidoFuncionario}
+          options={{ headerShown: false }} 
+        />
 
       </Stack.Navigator>
     </NavigationContainer>

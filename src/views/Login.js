@@ -31,7 +31,7 @@ export default function App({ navigation }) {
           </View>
           <Input label="Email"></Input>
           <Input label="Senha"></Input>
-          <Botao texto="Entrar" tipo="destaque" onPress={() => navigation.navigate('FazerPedido')} />
+          <Botao texto="Entrar" tipo="destaque" onPress={() => navigation.navigate('Menu')} />
           <Text onPress={() => navigation.navigate('RedefinirSenhaEmail')} style={{ marginTop: 10 }}>Esqueceu a senha? Clique aqui para recuperá-la</Text>
         </View>
       </ImageBackground>

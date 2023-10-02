@@ -36,7 +36,6 @@ export default function App({ navigation }) {
                     </View>
                     <Input label="Desconto"></Input>
                     <Input label="Valor Pago"></Input>
-                    <Input label="Produto"></Input>
                     <Botao texto="Cadastrar" tipo="destaque" onPress={() => showModal()} />
                 </View>
                 <Mod texto="Venda cadastrada com sucesso" visible={visible} dismiss={hideModal} botao="Sair" />
