@@ -4,8 +4,7 @@ import Input from "../components/Input";
 import Mod from "../components/Mod";
 
 import background from "../images/background.png";
-import logo from '../images/logo.png';
-
+import logo from "../images/logo.png";
 
 import {
   Dimensions,
@@ -13,7 +12,7 @@ import {
   View,
   Image,
   ImageBackground,
-  Text
+  Text,
 } from "react-native";
 import { PaperProvider } from "react-native-paper";
 
@@ -21,24 +20,32 @@ const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;
 
 export default function App({ navigation }) {
-
   return (
-
     <PaperProvider>
-      <ImageBackground style={styles.entirePage} source={background} resizeMode="stretch">
-        <View style={{ flex: 10, justifyContent: "center", alignItems: "center" }}>
+      <ImageBackground
+        style={styles.entirePage}
+        source={background}
+        resizeMode="stretch"
+      >
+        <View
+          style={{ flex: 10, justifyContent: "center", alignItems: "center" }}
+        >
           <View style={{ width: largura, alignItems: "center" }}>
-          <Titulo titulo="Cadastrar Venda" tipo="medio" />
+            <Titulo titulo="Cadastrar Venda" tipo="medio" />
           </View>
+          <Input label="CEP"></Input>
           <Input label="Rua"></Input>
           <Input label="Número"></Input>
           <Input label="Bairro"></Input>
           <Input label="Referência"></Input>
-          <Botao texto="Seguir" tipo="destaque" onPress={() => navigation.navigate('FazerPedidoFuncionario')} />
+          <Botao
+            texto="Seguir"
+            tipo="destaque"
+            onPress={() => navigation.navigate("FazerPedidoFuncionario")}
+          />
         </View>
       </ImageBackground>
     </PaperProvider>
-
   );
 }
 

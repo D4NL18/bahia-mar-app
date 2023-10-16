@@ -6,7 +6,9 @@ import CadastrarVendaCadastrado from './src/views/CadastrarVendaCadastrado.js'
 import CadastrarVendaSemCadastro from './src/views/CadastrarVendaSemCadastro.js'
 import CadastrarVendaValor from './src/views/CadastrarVendaValor.js'
 import CadastrarInfosCliente from './src/views/CadastrarInfosCliente.js'
+import CadastroInfosCliente from './src/views/CadastroInfosCliente.js'
 import CadastrarEnderecoCliente from './src/views/CadastrarEnderecoCliente.js'
+import CadastroEnderecoCliente from './src/views/CadastroEnderecoCliente.js'
 import FazerPedido from './src/views/FazerPedido.js'
 import ConfirmarPedido from './src/views/ConfirmarPedido.js'
 import FazerPedidoFuncionario from './src/views/FazerPedidoFuncionario.js'
@@ -27,7 +29,16 @@ export default function App() {
           component={Login}
           options={{ headerShown: false }}
         />
-
+        <Stack.Screen
+          name="CadastroInfosCliente"
+          component={CadastroInfosCliente}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CadastroEnderecoCliente"
+          component={CadastroEnderecoCliente}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Menu"
           component={Menu}

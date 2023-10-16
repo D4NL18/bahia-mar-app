@@ -6,6 +6,7 @@ import Mod from "../components/Mod";
 import background from "../images/background.png";
 import logo from '../images/logo.png';
 
+
 import {
   Dimensions,
   StyleSheet,
@@ -27,13 +28,11 @@ export default function App({ navigation }) {
       <ImageBackground style={styles.entirePage} source={background} resizeMode="stretch">
         <View style={{ flex: 10, justifyContent: "center", alignItems: "center" }}>
           <View style={{ width: largura, alignItems: "center" }}>
-            <Image source={logo} ></Image>
+          <Titulo titulo="Cadastro" tipo="medio" />
           </View>
-          <Input label="Email"></Input>
-          <Input label="Senha"></Input>
-          <Botao texto="Entrar" tipo="destaque" onPress={() => navigation.navigate('FazerPedido')} />
-          <Text onPress={() => navigation.navigate('CadastroInfosCliente')} style={{ marginTop: 10 }}>Não tem cadastro? Cadastre-se agora</Text>
-          <Text onPress={() => navigation.navigate('RedefinirSenhaEmail')} style={{ marginTop: 10 }}>Esqueceu a senha? Clique aqui para recuperá-la</Text>
+          <Input label="Nome"></Input>
+          <Input label="Telefone"></Input>
+          <Botao texto="Seguir" tipo="destaque" onPress={() => navigation.navigate('CadastroEnderecoCliente')} />
         </View>
       </ImageBackground>
     </PaperProvider>

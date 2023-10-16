@@ -4,7 +4,7 @@ import Input from "../components/Input";
 import Mod from "../components/Mod";
 
 import background from "../images/background.png";
-import logo from '../images/logo.png';
+import logo from "../images/logo.png";
 
 import {
   Dimensions,
@@ -12,7 +12,7 @@ import {
   View,
   Image,
   ImageBackground,
-  Text
+  Text,
 } from "react-native";
 import { PaperProvider } from "react-native-paper";
 
@@ -20,24 +20,32 @@ const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;
 
 export default function App({ navigation }) {
-
   return (
-
     <PaperProvider>
-      <ImageBackground style={styles.entirePage} source={background} resizeMode="stretch">
-        <View style={{ flex: 10, justifyContent: "center", alignItems: "center" }}>
+      <ImageBackground
+        style={styles.entirePage}
+        source={background}
+        resizeMode="stretch"
+      >
+        <View
+          style={{ flex: 10, justifyContent: "center", alignItems: "center" }}
+        >
           <View style={{ width: largura, alignItems: "center" }}>
-            <Image source={logo} ></Image>
+            <Titulo titulo="Cadastro" tipo="medio" />
           </View>
-          <Input label="Email"></Input>
-          <Input label="Senha"></Input>
-          <Botao texto="Entrar" tipo="destaque" onPress={() => navigation.navigate('FazerPedido')} />
-          <Text onPress={() => navigation.navigate('CadastroInfosCliente')} style={{ marginTop: 10 }}>Não tem cadastro? Cadastre-se agora</Text>
-          <Text onPress={() => navigation.navigate('RedefinirSenhaEmail')} style={{ marginTop: 10 }}>Esqueceu a senha? Clique aqui para recuperá-la</Text>
+          <Input label="CEP"></Input>
+          <Input label="Rua"></Input>
+          <Input label="Número"></Input>
+          <Input label="Bairro"></Input>
+          <Input label="Referência"></Input>
+          <Botao
+            texto="Seguir"
+            tipo="destaque"
+            onPress={() => navigation.navigate("Login")}
+          />
         </View>
       </ImageBackground>
     </PaperProvider>
-
   );
 }
 
