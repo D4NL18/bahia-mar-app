@@ -94,7 +94,7 @@ export default function App({ navigation }) {
           </ScrollView>
         </View>
         <View style={styles.botao}>
-          <Botao tipo="destaque" texto="Finalizar Compra" />
+          <Botao tipo="destaque" texto="Finalizar Compra" onPress={() => {navigation.navigate('ConfirmarPedido')}} />
         </View>
       </ImageBackground>
     </PaperProvider>
