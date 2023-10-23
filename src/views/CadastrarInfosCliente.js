@@ -16,6 +16,7 @@ import {
   Text
 } from "react-native";
 import { PaperProvider } from "react-native-paper";
+import { handleErrorBackend, login, testarLogin } from "../services/API.js";
 
 const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;

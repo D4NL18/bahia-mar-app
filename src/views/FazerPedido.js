@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
   StyleSheet,
@@ -14,11 +14,46 @@ import Botao from "../components/Botao";
 
 import background from "../images/background.png";
 import Teste from "../images/teste.png";
+import { TOKEN_KEY, handleErrorBackend, login, testarLogin } from "../services/API.js";
 
 const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;
 
 export default function App({ navigation }) {
+
+  const [product, setProduct] = useState([])
+
+  function fetch_products(event) {
+    if (aguardandoAsync) return;
+
+    setAguardandoAsync(true);
+    fetch(
+      `https://backend-bahia-mar.onrender.com/produtos/obter/${TOKEN_KEY}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) => res.json()).then((res) => {
+      if (res.error) {
+        handleErrorBackend(navigation.navigate, res.error);
+      } else {
+        // deu bom, proseguir...
+        raw_products = res.json;
+        const products = []
+        for(prod in raw_products){
+          products.push({...prod, quantidade: 0})
+        }
+        setProduct(products);
+      }
+    }).catch((err) => {
+      // mostrar mensagem de erro...
+      console.log(err);
+    }).finally(() => setAguardandoAsync(false));
+  }
+
   const itens = {
     item1: {
       title: "Galao 20L",

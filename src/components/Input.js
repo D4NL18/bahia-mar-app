@@ -11,14 +11,19 @@ import { TextInput } from "react-native-paper";
 const largura = Dimensions.get("screen").width;
 
 export default function Input(props) {
-  const [text, setText] = useState("");
 
+  const ChangeText = (texto) =>{
+    props.setValue(texto);
+  }
+  
   return (
       <TextInput
         label={props.label}
         mode="outlined"
-        value={text}
-        onChangeText={(text) => setText(text)}
+        value={props.value}
+        onChangeText={(text) => {ChangeText(text)}}
+        secureTextEntry={props.secure}
+
         selectionColor="#86BBD8"
         outlineColor="#86BBD8"
         activeOutlineColor="#86BBD8"
