@@ -13,20 +13,26 @@ import Botao from "../components/Botao";
 
 import background from "../images/background.png";
 import Teste from "../images/teste.png";
-import { TOKEN_KEY, handleErrorBackend, testarLogin } from "../services/API.js";
+import {
+  TOKEN_KEY,
+  getTokenSessao,
+  handleErrorBackend,
+  testarLogin,
+} from "../services/API.js";
 
 const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;
 
 export default function App({ navigation }) {
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState(undefined);
+  const [aguardandoAsync, setAguardandoAsync] = useState(false);
 
   function fetch_products(event) {
     if (aguardandoAsync) return;
 
     setAguardandoAsync(true);
     fetch(
-      `https://backend-bahia-mar.onrender.com/produtos/obter/${TOKEN_KEY}`,
+      `https://backend-bahia-mar.onrender.com/produtos/obter/${getTokenSessao()}`,
       {
         method: "GET",
         headers: {
@@ -41,12 +47,8 @@ export default function App({ navigation }) {
           handleErrorBackend(navigation.navigate, res.error);
         } else {
           // deu bom, proseguir...
-          raw_products = res.json;
-          const products = [];
-          for (prod in raw_products) {
-            products.push({ ...prod, quantidade: 0 });
-          }
-          setProduct(products);
+          console.log(res);
+          setProduct(res);
         }
       })
       .catch((err) => {
@@ -89,17 +91,6 @@ export default function App({ navigation }) {
     },
   };
 
-  // Agrupe os itens em pares
-  const groupedItems = Object.values(itens).reduce(
-    (acc, item, index, array) => {
-      if (index % 2 === 0) {
-        acc.push(array.slice(index, index + 2));
-      }
-      return acc;
-    },
-    []
-  );
-
   useEffect(() => {
     navigation.addListener("focus", async () => {
       testarLogin(navigation.navigate);
@@ -108,6 +99,22 @@ export default function App({ navigation }) {
 
     });*/
   }, []);
+
+  if (!product) {
+    fetch_products();
+    return <></>;
+  }
+
+  // Agrupe os itens em pares
+  const groupedItems = Object.values(product).reduce(
+    (acc, item, index, array) => {
+      if (index % 2 === 0) {
+        acc.push(array.slice(index, index + 2));
+      }
+      return acc;
+    },
+    []
+  );
 
   return (
     <PaperProvider>
@@ -130,9 +137,9 @@ export default function App({ navigation }) {
                 {group.map((item, itemIndex) => (
                   <Item
                     key={itemIndex}
-                    title={item.title}
+                    title={item["NOME"]}
                     image={item.image}
-                    preco={item.preco}
+                    preco={item["PRECO"]}
                   />
                 ))}
               </View>

@@ -99,7 +99,8 @@ export default function App({ navigation }) {
 
   useEffect(() => {
     navigation.addListener("focus", () => {
-      logout().then(() => setToken(""));
+      logout();
+      setToken("");
       //testarLogin(navigation.navigate, false);
     });
     navigation.addListener("blur", () => {

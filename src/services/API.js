@@ -36,8 +36,8 @@ export async function tokenEhValido(token, route = "validar-jwt") {
   });
 }
 
-export async function testarLogin(navigate, deveEstarLogado = true) {
-  const token = await getTokenSessao();
+export function testarLogin(navigate, deveEstarLogado = true) {
+  const token = getTokenSessao();
   console.log(token);
   // entrou em uma página que precisa estar logado mas não está logado
   if (deveEstarLogado && token === null) {
@@ -64,11 +64,11 @@ export function handleErrorBackend(navigate, error) {
   }
 }
 
-export async function getTokenSessao() {
+export function getTokenSessao() {
   return storage[TOKEN_KEY];
 }
 
-export async function login(token) {
+export function login(token) {
   storage[TOKEN_KEY] = token;
 }
 export const logout = resetarLocalStorage;

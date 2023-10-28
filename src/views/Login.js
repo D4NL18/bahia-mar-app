@@ -49,7 +49,8 @@ export default function App({ navigation }) {
           handleErrorBackend(navigation.navigate, res.error);
         } else {
           // deu bom, proseguir...
-          login(res.token).then(() => navigation.navigate("FazerPedido"));
+          login(res.token);
+          navigation.navigate("FazerPedido");
         }
       })
       .catch((err) => {
@@ -61,7 +62,8 @@ export default function App({ navigation }) {
 
   useEffect(() => {
     navigation.addListener("focus", () => {
-      logout().then(() => setToken(""));
+      logout();
+      setToken("");
       //testarLogin(navigation.navigate, false);
     });
     navigation.addListener("blur", () => {
