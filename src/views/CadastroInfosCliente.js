@@ -1,96 +1,205 @@
+import { BACKEND_ROUTE } from "@env";
+
 import Titulo from "../components/Titulo";
 import Botao from "../components/Botao";
 import Input from "../components/Input";
-import Mod from "../components/Mod";
 
 import background from "../images/background.png";
-import logo from '../images/logo.png';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dimensions,
   StyleSheet,
   View,
-  Image,
   ImageBackground,
-  Text,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { PaperProvider } from "react-native-paper";
-import axios from "axios";
+import { handleErrorBackend, logout } from "../services/API";
 
 const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;
 
-export default function App({ navigation }) {
+const camposPadrao = {
+  email: "",
+  nome: "",
+  telefone: "",
+  cep: "",
+  rua: "",
+  numero: "",
+  bairro: "",
+  referencia: "",
+  senha: "",
+};
 
-  const [nome, setNome] = useState("");
-  const [telefone, setTelefone] = useState("");
-  const [cep, setCep] = useState("");
-  const [rua, setRua] = useState("");
-  const [numero, setNumero] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [referencia, setReferencia] = useState("");
+export default function App({ navigation }) {
+  const [aguardandoAsync, setAguardandoAsync] = useState(false);
+  const [campos, setCampos] = useState(camposPadrao);
+  const [token, setToken] = useState(null);
+
+  function changeSenha(texto = "") {
+    const senhaRegex = /^[a-zA-Z0-9!@#$&]+$/;
+    if (texto === "" || senhaRegex.test(texto))
+      setCampos({ ...campos, senha: texto });
+  }
+  function changeTelefone(texto = "") {
+    const telefoneRegex = /^\d{0,7}-?\d{0,4}$/;
+    if (texto === "" || telefoneRegex.test(texto))
+      setCampos({ ...campos, telefone: texto });
+  }
+  function changeCep(texto = "") {
+    const cepRegex = /^\d{0,5}-?\d{0,3}$/;
+    if (texto === "" || cepRegex.test(texto))
+      setCampos({ ...campos, cep: texto });
+  }
+  function changeNumero(texto) {
+    const numeroRegex = /^\d{0,5}$/;
+    if (texto === "" || numeroRegex.test(texto))
+      setCampos({ ...campos, numero: texto });
+  }
 
   function cadastrar() {
     if (aguardandoAsync) return;
 
-
     setAguardandoAsync(true);
-    fetch(
-      `https://backend-bahia-mar.onrender.com/clientes/inserir/`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: {
-          nome: nome,
-          telefone: telefone,
-          cep: cep,
-          rua: rua,
-          numero: numero,
-          bairro: bairro,
-          referencia: referencia
+    fetch(`${BACKEND_ROUTE}/app/cadastrar_usuario`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: campos.email,
+        password: campos.senha,
+        name: campos.nome.trim(),
+        phone: campos.telefone,
+        cep: campos.cep,
+        street: campos.rua.trim(),
+        houseNumber: campos.numero,
+        neighborhood: campos.bairro.trim(),
+        referencePoint: campos.referencia.trim(),
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.error) {
+          handleErrorBackend(navigation.navigate, res.error);
+        } else {
+          // deu bom, proseguir...
+          alert("Cadastro concluído");
+          navigation.navigate("Login");
         }
-      }
-    ).then((res) => res.json()).then((res) => {
-      if (res.error) {
-        handleErrorBackend(navigation.navigate, res.error);
-      } else {
-        // deu bom, proseguir...
-        navigation.navigate('Login');
-      }
-    }).catch((err) => {
-      // mostrar mensagem de erro...
-      console.log(err);
-    }).finally(() => setAguardandoAsync(false));
+      })
+      .catch((err) => {
+        // mostrar mensagem de erro...
+        console.error(err);
+      })
+      .finally(() => setAguardandoAsync(false));
   }
 
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      logout().then(() => setToken(""));
+      //testarLogin(navigation.navigate, false);
+    });
+    navigation.addListener("blur", () => {
+      setCampos(camposPadrao);
+    });
+  });
+
+  if (token === null) return <></>;
+
   return (
-
-
     <PaperProvider>
-      <ImageBackground style={styles.entirePage} source={background} resizeMode="stretch">
+      <ImageBackground
+        style={styles.entirePage}
+        source={background}
+        resizeMode="stretch"
+      >
         <View style={styles.container}>
           <View style={styles.titulo}>
             <Titulo titulo="Cadastro" tipo="medio" />
           </View>
           <ScrollView style={styles.scrollview}>
-            <Input label="Nome" value={nome} setValue={setNome} secure={false}></Input>
-            <Input label="Telefone" value={telefone} setValue={setTelefone} secure={false}></Input>
-            <Input label="CEP" value={cep} setValue={setCep} secure={false}></Input>
-            <Input label="Rua" value={rua} setValue={setRua} secure={false}></Input>
-            <Input label="Número" value={numero} setValue={setNumero} secure={false}></Input>
-            <Input label="Bairro" value={bairro} setValue={setBairro} secure={false}></Input>
-            <Input label="Referência" value={referencia} setValue={setReferencia} secure={false}></Input>
+            <Input
+              label="Email"
+              value={campos.email}
+              setValue={(texto) =>
+                setCampos({ ...campos, email: texto.trim() })
+              }
+              keyboardType="email-address"
+              maxLength={50}
+            ></Input>
+            <Input
+              label="Nome"
+              value={campos.nome}
+              setValue={(texto) =>
+                setCampos({ ...campos, nome: texto.trimStart() })
+              }
+              maxLength={50}
+            ></Input>
+            <Input
+              label="Telefone"
+              value={campos.telefone}
+              setValue={changeTelefone}
+              keyboardType="numeric"
+              maxLength={12}
+            ></Input>
+            <Input
+              label="CEP"
+              value={campos.cep}
+              setValue={changeCep}
+              keyboardType="numeric"
+              maxLength={9}
+            ></Input>
+            <Input
+              label="Rua"
+              value={campos.rua}
+              setValue={(texto) =>
+                setCampos({ ...campos, rua: texto.trimStart() })
+              }
+              maxLength={50}
+            ></Input>
+            <Input
+              label="Número"
+              value={campos.numero}
+              setValue={changeNumero}
+              keyboardType="numeric"
+              maxLength={5}
+            ></Input>
+            <Input
+              label="Bairro"
+              value={campos.bairro}
+              setValue={(texto) =>
+                setCampos({ ...campos, bairro: texto.trimStart() })
+              }
+              maxLength={50}
+            ></Input>
+            <Input
+              label="Referência"
+              value={campos.referencia}
+              setValue={(texto) =>
+                setCampos({ ...campos, referencia: texto.trimStart() })
+              }
+              maxLength={50}
+            ></Input>
+            <Input
+              label="Senha"
+              value={campos.senha}
+              setValue={changeSenha}
+              secureTextEntry={true}
+              maxLength={15}
+            ></Input>
           </ScrollView>
-          <Botao texto="Concluir" tipo="destaque" onPress={() => navigation.navigate('CadastroEnderecoCliente')} />
+          <Botao
+            disabled={aguardandoAsync}
+            texto="Concluir"
+            tipo="destaque"
+            onPress={cadastrar}
+          />
         </View>
       </ImageBackground>
     </PaperProvider>
-
   );
 }
 
@@ -107,16 +216,16 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 60,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   titulo: {
     flex: 0.1,
     // backgroundColor: "red"
   },
   scrollview: {
-    flex: 0.6
+    flex: 0.6,
   },
   botao: {
-    flex: 0.2
-  }
+    flex: 0.2,
+  },
 });

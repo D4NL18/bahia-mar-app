@@ -1,24 +1,22 @@
-import Menu from './src/views/Menu.js'
-import Login from './src/views/Login.js'
-import RedefinirSenhaEmail from './src/views/RedefinirSenhaEmail.js'
-import RedefinirSenha from './src/views/RedefinirSenha.js'
-import CadastrarVendaCadastrado from './src/views/CadastrarVendaCadastrado.js'
-import CadastrarVendaSemCadastro from './src/views/CadastrarVendaSemCadastro.js'
-import CadastrarVendaValor from './src/views/CadastrarVendaValor.js'
-import CadastrarInfosCliente from './src/views/CadastrarInfosCliente.js'
-import CadastroInfosCliente from './src/views/CadastroInfosCliente.js'
-import CadastrarEnderecoCliente from './src/views/CadastrarEnderecoCliente.js'
-import CadastroEnderecoCliente from './src/views/CadastroEnderecoCliente.js'
-import FazerPedido from './src/views/FazerPedido.js'
-import ConfirmarPedido from './src/views/ConfirmarPedido.js'
-import FazerPedidoFuncionario from './src/views/FazerPedidoFuncionario.js'
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Menu from "./src/views/Menu.js";
+import Login from "./src/views/Login.js";
+import RedefinirSenhaEmail from "./src/views/RedefinirSenhaEmail.js";
+import RedefinirSenha from "./src/views/RedefinirSenha.js";
+import CadastrarVendaCadastrado from "./src/views/CadastrarVendaCadastrado.js";
+import CadastrarVendaSemCadastro from "./src/views/CadastrarVendaSemCadastro.js";
+import CadastrarVendaValor from "./src/views/CadastrarVendaValor.js";
+import CadastrarInfosCliente from "./src/views/CadastrarInfosCliente.js";
+import CadastroInfosCliente from "./src/views/CadastroInfosCliente.js";
+import CadastrarEnderecoCliente from "./src/views/CadastrarEnderecoCliente.js";
+import CadastroEnderecoCliente from "./src/views/CadastroEnderecoCliente.js";
+import FazerPedido from "./src/views/FazerPedido.js";
+import ConfirmarPedido from "./src/views/ConfirmarPedido.js";
+import FazerPedidoFuncionario from "./src/views/FazerPedidoFuncionario.js";
+import { StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 export default function App() {
-
   const Stack = createNativeStackNavigator();
 
   return (
@@ -92,9 +90,8 @@ export default function App() {
         <Stack.Screen
           name="FazerPedidoFuncionario"
           component={FazerPedidoFuncionario}
-          options={{ headerShown: false }} 
+          options={{ headerShown: false }}
         />
-
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -103,8 +100,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

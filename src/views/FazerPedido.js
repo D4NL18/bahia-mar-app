@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions,
   StyleSheet,
   View,
   ScrollView,
-  Image,
   ImageBackground,
 } from "react-native";
 import { PaperProvider } from "react-native-paper";
@@ -14,14 +13,13 @@ import Botao from "../components/Botao";
 
 import background from "../images/background.png";
 import Teste from "../images/teste.png";
-import { TOKEN_KEY, handleErrorBackend, login, testarLogin } from "../services/API.js";
+import { TOKEN_KEY, handleErrorBackend, testarLogin } from "../services/API.js";
 
 const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;
 
 export default function App({ navigation }) {
-
-  const [product, setProduct] = useState([])
+  const [product, setProduct] = useState([]);
 
   function fetch_products(event) {
     if (aguardandoAsync) return;
@@ -36,22 +34,26 @@ export default function App({ navigation }) {
           "Content-Type": "application/json",
         },
       }
-    ).then((res) => res.json()).then((res) => {
-      if (res.error) {
-        handleErrorBackend(navigation.navigate, res.error);
-      } else {
-        // deu bom, proseguir...
-        raw_products = res.json;
-        const products = []
-        for(prod in raw_products){
-          products.push({...prod, quantidade: 0})
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.error) {
+          handleErrorBackend(navigation.navigate, res.error);
+        } else {
+          // deu bom, proseguir...
+          raw_products = res.json;
+          const products = [];
+          for (prod in raw_products) {
+            products.push({ ...prod, quantidade: 0 });
+          }
+          setProduct(products);
         }
-        setProduct(products);
-      }
-    }).catch((err) => {
-      // mostrar mensagem de erro...
-      console.log(err);
-    }).finally(() => setAguardandoAsync(false));
+      })
+      .catch((err) => {
+        // mostrar mensagem de erro...
+        console.log(err);
+      })
+      .finally(() => setAguardandoAsync(false));
   }
 
   const itens = {
@@ -98,6 +100,15 @@ export default function App({ navigation }) {
     []
   );
 
+  useEffect(() => {
+    navigation.addListener("focus", async () => {
+      testarLogin(navigation.navigate);
+    });
+    /*navigation.addListener("blur", () => {
+
+    });*/
+  }, []);
+
   return (
     <PaperProvider>
       <ImageBackground
@@ -129,7 +140,13 @@ export default function App({ navigation }) {
           </ScrollView>
         </View>
         <View style={styles.botao}>
-          <Botao tipo="destaque" texto="Finalizar Compra" onPress={() => {navigation.navigate('ConfirmarPedido')}} />
+          <Botao
+            tipo="destaque"
+            texto="Finalizar Compra"
+            onPress={() => {
+              navigation.navigate("ConfirmarPedido");
+            }}
+          />
         </View>
       </ImageBackground>
     </PaperProvider>
