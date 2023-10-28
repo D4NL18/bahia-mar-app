@@ -1,15 +1,17 @@
-import * as SecureStore from "expo-secure-store";
+import { BACKEND_ROUTE } from "@env";
 
 const TOKEN_KEY = "bahiamar-client-token";
 //export const EH_ADMIN = "&bahiamar-client-is-admin";
 
+const storage = {};
+
 async function resetarLocalStorage() {
-  await SecureStore.deleteItemAsync(TOKEN_KEY);
+  delete storage[TOKEN_KEY];
 }
 
 export async function tokenEhValido(token, route = "validar-jwt") {
   return new Promise((resolve, reject) => {
-    fetch(`${process.env.BACKEND_ROUTE}/${route}/${token}`, {
+    fetch(`${BACKEND_ROUTE}/${route}/${token}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -63,10 +65,10 @@ export function handleErrorBackend(navigate, error) {
 }
 
 export async function getTokenSessao() {
-  return await SecureStore.getItemAsync(TOKEN_KEY);
+  return storage[TOKEN_KEY];
 }
 
 export async function login(token) {
-  await SecureStore.setItemAsync(TOKEN_KEY, token);
+  storage[TOKEN_KEY] = token;
 }
 export const logout = resetarLocalStorage;
