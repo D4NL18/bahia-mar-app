@@ -20,114 +20,14 @@ import Teste from "../images/teste.png";
 const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;
 
-export default function App({ navigation }) {
-  const items = [
-    {
-      nome: "First Item",
-      quantidade: "10",
-      valor: "R$2000,00",
-    },
-    {
-      nome: "Second Item",
-      quantidade: "20",
-      valor: "R$3000,00",
-    },
-    {
-      nome: "Third Item",
-      quantidade: "30",
-      valor: "R$4000,00",
-    },
-    {
-      nome: "First Item",
-      quantidade: "10",
-      valor: "R$2000,00",
-    },
-    {
-      nome: "Second Item",
-      quantidade: "20",
-      valor: "R$3000,00",
-    },
-    {
-      nome: "Third Item",
-      quantidade: "30",
-      valor: "R$4000,00",
-    },
-    {
-      nome: "First Item",
-      quantidade: "10",
-      valor: "R$2000,00",
-    },
-    {
-      nome: "Second Item",
-      quantidade: "20",
-      valor: "R$3000,00",
-    },
-    {
-      nome: "Third Item",
-      quantidade: "30",
-      valor: "R$4000,00",
-    },
-    {
-      nome: "First Item",
-      quantidade: "10",
-      valor: "R$2000,00",
-    },
-    {
-      nome: "Second Item",
-      quantidade: "20",
-      valor: "R$3000,00",
-    },
-    {
-      nome: "Third Item",
-      quantidade: "30",
-      valor: "R$4000,00",
-    },
-    {
-      nome: "First Item",
-      quantidade: "10",
-      valor: "R$2000,00",
-    },
-    {
-      nome: "Second Item",
-      quantidade: "20",
-      valor: "R$3000,00",
-    },
-    {
-      nome: "Third Item",
-      quantidade: "30",
-      valor: "R$4000,00",
-    },
-    {
-      nome: "First Item",
-      quantidade: "10",
-      valor: "R$2000,00",
-    },
-    {
-      nome: "Second Item",
-      quantidade: "20",
-      valor: "R$3000,00",
-    },
-    {
-      nome: "Third Item",
-      quantidade: "30",
-      valor: "R$4000,00",
-    },
-  ];
+export default function App({ route, navigation }) {
+  const items = route.params.jsonData;
 
-  const Coluna = (props) => (
-    <View style={styles.coluna}>
-      <Text style={styles.infos}>{props.title}:</Text>
-      {items.map((item, index) => (
-        <View key={index}>
-          <Text style={styles.infos}>
-            {props.title == "Nome"
-              ? item.nome
-              : props.title == "Quantidade"
-              ? item.quantidade
-              : item.valor}{" "}
-          </Text>
-        </View>
-      ))}
+  const Card = (props) => (
+    <View style={styles.card}>
+      <Text>{props.title}</Text>
+      <Text>{props.quantidade}</Text>
+      <Text>R$ {props.preco}</Text>
     </View>
   );
 
@@ -146,10 +46,10 @@ export default function App({ navigation }) {
             contentContainerStyle={styles.scrollViewContent}
             style={styles.scrollView}
           >
-            <View style={styles.containerColuna}>
-              <Coluna title="Nome"/>
-              <Coluna title="Quantidade"/>
-              <Coluna title="Valor"/>
+            <View style={styles.containerCard}>
+              {items.map((item, index) => (
+                <Card title={item.NOME} quantidade={item.COUNT} preco={item.PRECO * item.COUNT}></Card>
+              ))}
             </View>
           </ScrollView>
         </View>
@@ -213,17 +113,24 @@ const styles = StyleSheet.create({
     margin: 8,
   },
 
-  containerColuna: {
+  containerCard: {
+    display: "flex",
+    flexDirection: "column",
+    width: largura,
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  card: {
     display: "flex",
     flexDirection: "row",
-    width: largura*0.9,
     justifyContent: "space-between",
-
-  },
-  coluna: {
-    display: "flex",
     alignItems: "center",
-    width: (largura*0.9)/3,
-    borderWidth: 1,
+    height: 100,
+    width: largura * 0.85,
+    paddingHorizontal: 20,
+    borderWidth: 3,
+    borderRadius: 30,
+    borderColor: "#86BBD8",
+    marginBottom: 20,
   }
 });

@@ -36,7 +36,8 @@ export default function App({ navigation }) {
     if (aguardandoAsync) return;
 
     setAguardandoAsync(true);
-    fetch(`${BACKEND_ROUTE}/app/login/?email=${email}&password=${senha}`, {
+    const route_handler = BACKEND_ROUTE;
+    fetch(`${route_handler}/app/login/?email=${email}&password=${senha}`, {
       method: "GET",
       headers: {
         Accept: "application/json",

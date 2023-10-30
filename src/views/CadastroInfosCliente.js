@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import {
   Dimensions,
   StyleSheet,
+  SafeAreaView,
   View,
   ImageBackground,
   ScrollView,
@@ -62,7 +63,8 @@ export default function App({ navigation }) {
     if (aguardandoAsync) return;
 
     setAguardandoAsync(true);
-    fetch(`${BACKEND_ROUTE}/app/cadastrar_usuario`, {
+    const route_handler = BACKEND_ROUTE;
+    fetch(`${route_handler}/app/cadastrar_usuario`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -117,7 +119,7 @@ export default function App({ navigation }) {
         source={background}
         resizeMode="stretch"
       >
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <View style={styles.titulo}>
             <Titulo titulo="Cadastro" tipo="medio" />
           </View>
@@ -198,7 +200,7 @@ export default function App({ navigation }) {
             tipo="destaque"
             onPress={cadastrar}
           />
-        </View>
+        </SafeAreaView>
       </ImageBackground>
     </PaperProvider>
   );
