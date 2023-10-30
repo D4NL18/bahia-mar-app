@@ -1,3 +1,4 @@
+import { BACKEND_ROUTE } from "@env";
 import React, { useEffect, useState } from "react";
 import {
   Dimensions,
@@ -31,8 +32,9 @@ export default function App({ navigation }) {
     if (aguardandoAsync) return;
 
     setAguardandoAsync(true);
+    const route_handler = BACKEND_ROUTE;
     fetch(
-      `https://backend-bahia-mar.onrender.com/produtos/obter/${getTokenSessao()}`,
+      `${route_handler}/produtos/obter/${getTokenSessao()}`,
       {
         method: "GET",
         headers: {
@@ -47,8 +49,8 @@ export default function App({ navigation }) {
           handleErrorBackend(navigation.navigate, res.error);
         } else {
           // deu bom, proseguir...
-          console.log(res);
-          setProduct(res);
+          // console.log(res);
+          setProduct(res.map((value)=>({...value, COUNT: 0})));
         }
       })
       .catch((err) => {
@@ -57,39 +59,6 @@ export default function App({ navigation }) {
       })
       .finally(() => setAguardandoAsync(false));
   }
-
-  const itens = {
-    item1: {
-      title: "Galao 20L",
-      image: Teste,
-      preco: 200,
-    },
-    item2: {
-      title: "Galao 10L",
-      image: Teste,
-      preco: 100,
-    },
-    item3: {
-      title: "Galao 20L",
-      image: Teste,
-      preco: 20,
-    },
-    item4: {
-      title: "Galao 10L",
-      image: Teste,
-      preco: 30,
-    },
-    item5: {
-      title: "Galao 20L",
-      image: Teste,
-      preco: 40,
-    },
-    item6: {
-      title: "Galao 10L",
-      image: Teste,
-      preco: 50,
-    },
-  };
 
   useEffect(() => {
     navigation.addListener("focus", async () => {
@@ -115,7 +84,7 @@ export default function App({ navigation }) {
     },
     []
   );
-
+  console.log(product)
   return (
     <PaperProvider>
       <ImageBackground
@@ -137,9 +106,7 @@ export default function App({ navigation }) {
                 {group.map((item, itemIndex) => (
                   <Item
                     key={itemIndex}
-                    title={item["NOME"]}
-                    image={item.image}
-                    preco={item["PRECO"]}
+                    item={item}
                   />
                 ))}
               </View>
@@ -151,7 +118,8 @@ export default function App({ navigation }) {
             tipo="destaque"
             texto="Finalizar Compra"
             onPress={() => {
-              navigation.navigate("ConfirmarPedido");
+              navigation.navigate("ConfirmarPedido", {jsonData: product});
+              // console.log(product);
             }}
           />
         </View>

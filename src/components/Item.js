@@ -7,25 +7,28 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 const largura = Dimensions.get("screen").width;
 
 export default function Botao(props) {
-  const [cont, setCont] = useState(0);
+  const [cont, setCont] = useState(props.item.COUNT);
 
-  const { preco, title, image } = props;
-  let resultado = cont * preco;
+  const { NOME, PRECO, COUNT } = props.item;
+  let resultado = COUNT * PRECO;
 
   return (
     <View style={styles.Container}>
       <View style={styles.ImageContainer}>
         <Text style={styles.Text}>Total do Produto:</Text>
         <Text style={styles.Text}>R${resultado}</Text>
-        <Image source={props.image} style={styles.Image} />
-        <Text style={styles.Text}>{title}</Text>
-        <Text style={styles.Text}>Preço: R${preco}</Text>
+        {/*<Image source={props.image} style={styles.Image} />*/}
+        <Text style={styles.Text}>{NOME}</Text>
+        <Text style={styles.Text}>Preço: R${PRECO}</Text>
       </View>
       <View style={styles.Quantidade}>
         <IconButton
           icon={() => <MaterialCommunityIcons name="minus" size={24} />}
           onPress={() => {
-            cont > 0 ? setCont(cont - 1) : "";
+            if(cont > 0){
+              setCont(cont - 1);
+              props.item.COUNT -= 1;
+            }
           }}
         />
         <Text style={styles.Text}>{cont}</Text>
@@ -33,6 +36,7 @@ export default function Botao(props) {
           icon={() => <MaterialCommunityIcons name="plus" size={24} />}
           onPress={() => {
             setCont(cont + 1);
+            props.item.COUNT += 1;
           }}
         />
       </View>
