@@ -1,10 +1,10 @@
-import React from "react";
+import { BACKEND_ROUTE } from "@env";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions,
   StyleSheet,
   View,
   ScrollView,
-  Image,
   ImageBackground,
 } from "react-native";
 import { PaperProvider } from "react-native-paper";
@@ -14,46 +14,70 @@ import Botao from "../components/Botao";
 
 import background from "../images/background.png";
 import Teste from "../images/teste.png";
+import {
+  TOKEN_KEY,
+  getTokenSessao,
+  handleErrorBackend,
+  testarLogin,
+} from "../services/API.js";
 
 const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;
 
-export default function App({ navigation }) {
-  const itens = {
-    item1: {
-      title: "Galao 20L",
-      image: Teste,
-      preco: 200,
-    },
-    item2: {
-      title: "Galao 10L",
-      image: Teste,
-      preco: 100,
-    },
-    item3: {
-      title: "Galao 20L",
-      image: Teste,
-      preco: 20,
-    },
-    item4: {
-      title: "Galao 10L",
-      image: Teste,
-      preco: 30,
-    },
-    item5: {
-      title: "Galao 20L",
-      image: Teste,
-      preco: 40,
-    },
-    item6: {
-      title: "Galao 10L",
-      image: Teste,
-      preco: 50,
-    },
-  };
+export default function App({ route, navigation }) {
+  const sale_register = route.params.jsonData;
+
+  const [product, setProduct] = useState(undefined);
+  const [aguardandoAsync, setAguardandoAsync] = useState(false);
+
+  function fetch_products(event) {
+    if (aguardandoAsync) return;
+
+    setAguardandoAsync(true);
+    const route_handler = BACKEND_ROUTE;
+    fetch(
+      `${route_handler}/produtos/obter/${getTokenSessao()}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.error) {
+          handleErrorBackend(navigation.navigate, res.error);
+        } else {
+          // deu bom, proseguir...
+          // console.log(res);
+          setProduct(res.map((value)=>({...value, COUNT: 0})));
+        }
+      })
+      .catch((err) => {
+        // mostrar mensagem de erro...
+        console.log(err);
+      })
+      .finally(() => setAguardandoAsync(false));
+  }
+
+  useEffect(() => {
+    navigation.addListener("focus", async () => {
+      testarLogin(navigation.navigate);
+    });
+    /*navigation.addListener("blur", () => {
+
+    });*/
+  }, []);
+
+  if (!product) {
+    fetch_products();
+    return <></>;
+  }
 
   // Agrupe os itens em pares
-  const groupedItems = Object.values(itens).reduce(
+  const groupedItems = Object.values(product).reduce(
     (acc, item, index, array) => {
       if (index % 2 === 0) {
         acc.push(array.slice(index, index + 2));
@@ -62,7 +86,7 @@ export default function App({ navigation }) {
     },
     []
   );
-
+  console.log(product)
   return (
     <PaperProvider>
       <ImageBackground
@@ -84,9 +108,7 @@ export default function App({ navigation }) {
                 {group.map((item, itemIndex) => (
                   <Item
                     key={itemIndex}
-                    title={item.title}
-                    image={item.image}
-                    preco={item.preco}
+                    item={item}
                   />
                 ))}
               </View>
@@ -94,7 +116,14 @@ export default function App({ navigation }) {
           </ScrollView>
         </View>
         <View style={styles.botao}>
-          <Botao tipo="destaque" texto="Finalizar Pedido" onPress={() => navigation.navigate('CadastrarVendaValor')} />
+          <Botao
+            tipo="destaque"
+            texto="Finalizar Compra"
+            onPress={() => {
+              navigation.navigate("ConfirmarPedidoFuncionario", {jsonData: {sale_register: sale_register, product: product}});
+              // console.log(product);
+            }}
+          />
         </View>
       </ImageBackground>
     </PaperProvider>

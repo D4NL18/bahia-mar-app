@@ -21,6 +21,10 @@ const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;
 
 export default function App({ navigation }) {
+  const [funcionario, setFuncionario] = useState("");
+  const [veiculo, setVeiculo] = useState("");
+  const [cliente, setCliente] = useState("");
+  const [pagamento, setPagamento] = useState("");
 
   return (
 
@@ -30,11 +34,36 @@ export default function App({ navigation }) {
           <View style={{ width: largura, alignItems: "center" }}>
           <Titulo titulo="Cadastrar Venda" tipo="medio" />
           </View>
-          <Input label="Funcionário"></Input>
-          <Input label="Veículo"></Input>
-          <Input label="Cliente"></Input>
-          <Input label="Forma de Pagamento"></Input>
-          <Botao texto="Seguir" tipo="destaque" onPress={() => navigation.navigate('FazerPedidoFuncionario')} />
+          <Input
+            label="Funcionário"
+            value={funcionario}
+            setValue={(texto) => setFuncionario(texto.trim())}
+          ></Input>
+          <Input
+            label="Veículo"
+            value={veiculo}
+            setValue={(texto) => setVeiculo(texto.trim())}
+          ></Input>
+          <Input
+            label="Cliente"
+            value={cliente}
+            setValue={(texto) => setCliente(texto.trim())}
+          ></Input>
+          <Input
+            label="Forma de Pagamento"
+            value={pagamento}
+            setValue={(texto) => setPagamento(texto.trim())}
+          ></Input>
+          <Botao 
+            texto="Seguir" 
+            tipo="destaque" 
+            onPress={() => navigation.navigate('FazerPedidoFuncionario', {jsonData: {
+              funcionario: funcionario,
+              veiculo: veiculo,
+              cliente: cliente,
+              pagamento: pagamento
+            }})} 
+          />
         </View>
       </ImageBackground>
     </PaperProvider>

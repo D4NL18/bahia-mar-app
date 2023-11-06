@@ -12,6 +12,7 @@ import CadastroEnderecoCliente from "./src/views/CadastroEnderecoCliente.js";
 import FazerPedido from "./src/views/FazerPedido.js";
 import ConfirmarPedido from "./src/views/ConfirmarPedido.js";
 import FazerPedidoFuncionario from "./src/views/FazerPedidoFuncionario.js";
+import ConfirmarPedidoFuncionario from "./src/views/ConfirmarPedidoFuncionario.js";
 
 import { name as appName } from "./app.json";
 import { AppRegistry, StyleSheet } from "react-native";
@@ -94,6 +95,11 @@ export default function App() {
           <Stack.Screen
             name="FazerPedidoFuncionario"
             component={FazerPedidoFuncionario}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ConfirmarPedidoFuncionario"
+            component={ConfirmarPedidoFuncionario}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

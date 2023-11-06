@@ -58,7 +58,9 @@ export default function App({ route, navigation }) {
             tipo="destaque"
             texto="Finalizar Compra"
             onPress={() => {
-              navigation.navigate("Menu");
+              // Cliente
+              // função de registrar pedido;
+              navigation.navigate("FazerPedido");
             }}
           />
         </View>

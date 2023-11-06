@@ -50,8 +50,12 @@ export default function App({ navigation }) {
           handleErrorBackend(navigation.navigate, res.error);
         } else {
           // deu bom, proseguir...
+          // console.log(res);
           login(res.token);
-          navigation.navigate("FazerPedido");
+          // Cliente
+          // navigation.navigate("FazerPedido");
+          // Funcionário
+          navigation.navigate("Menu");
         }
       })
       .catch((err) => {
