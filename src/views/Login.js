@@ -52,10 +52,11 @@ export default function App({ navigation }) {
           // deu bom, proseguir...
           // console.log(res);
           login(res.token);
-          // Cliente
-          // navigation.navigate("FazerPedido");
-          // Funcionário
-          navigation.navigate("Menu");
+          if(res.isEmployee == false){
+            navigation.navigate("Menu");
+          } else{
+            navigation.navigate("FazerPedido");
+          }
         }
       })
       .catch((err) => {
