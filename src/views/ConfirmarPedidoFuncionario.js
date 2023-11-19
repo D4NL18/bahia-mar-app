@@ -1,5 +1,6 @@
 import { BACKEND_ROUTE } from "@env";
 import React from "react";
+import { useEffect, useState } from "react";
 import {
     Dimensions,
     StyleSheet,
@@ -23,14 +24,19 @@ const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;
 
 export default function App({ route, navigation }) {
+    const sale_register = route.params.jsonData.sale_register;
     const items = route.params.jsonData.product;
+    var amount_paid = 0;
+    for(i in items){
+        amount_paid += (i.PRECO * i.COUNT);
+    }
     const [aguardandoAsync, setAguardandoAsync] = useState(false);
 
     const Card = (props) => (
         <View style={styles.card}>
             <Text>{props.title}</Text>
             <Text>{props.quantidade}</Text>
-            <Text>R$ {props.preco}</Text>
+            <Text>R$ {props.preco.toFixed(2)}</Text>
         </View>
     );
 
@@ -46,7 +52,16 @@ export default function App({ route, navigation }) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                
+                sale: {
+                    employeeId: sale_register.funcionario,
+                    vehicleId: sale_register.veiculo,
+                    clientId: sale_register.cliente,
+                    paymentMethodId: sale_register.pagamento,
+                    discount: 0,
+                    amountPaid: amount_paid,
+                    total: amount_paid,
+                },
+                products: items
             })
         })
             .then((res) => res.json())
@@ -55,17 +70,12 @@ export default function App({ route, navigation }) {
                     handleErrorBackend(navigation.navigate, res.error);
                 } else {
                     // deu bom, proseguir...
-                    // console.log(res);
-                    login(res.token);
-                    // Cliente
-                    // navigation.navigate("FazerPedido");
-                    // Funcionário
                     navigation.navigate("Menu");
                 }
             })
             .catch((err) => {
                 // mostrar mensagem de erro...
-                console.log(err);
+                console.log(`Error: ${err}`);
             })
             .finally(() => setAguardandoAsync(false));
     }
@@ -97,7 +107,7 @@ export default function App({ route, navigation }) {
                         tipo="destaque"
                         texto="Finalizar Compra"
                         onPress={() => {
-                            console.log(route.params.jsonData)
+                            console.log("Pedido Concluído")
                             navigation.navigate("Menu");
                         }}
                     />

@@ -27,7 +27,7 @@ export default function App({ route, navigation }) {
     <View style={styles.card}>
       <Text>{props.title}</Text>
       <Text>{props.quantidade}</Text>
-      <Text>R$ {props.preco}</Text>
+      <Text>R$ {props.preco.toFixed(2)}</Text>
     </View>
   );
 

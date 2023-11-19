@@ -134,6 +134,13 @@ export default function App({ navigation }) {
               maxLength={50}
             ></Input>
             <Input
+              label="Senha"
+              value={campos.senha}
+              setValue={changeSenha}
+              secureTextEntry={true}
+              maxLength={15}
+            ></Input>
+            <Input
               label="Nome"
               value={campos.nome}
               setValue={(texto) =>
@@ -185,13 +192,6 @@ export default function App({ navigation }) {
                 setCampos({ ...campos, referencia: texto.trimStart() })
               }
               maxLength={50}
-            ></Input>
-            <Input
-              label="Senha"
-              value={campos.senha}
-              setValue={changeSenha}
-              secureTextEntry={true}
-              maxLength={15}
             ></Input>
           </ScrollView>
           <Botao

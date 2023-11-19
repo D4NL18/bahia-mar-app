@@ -84,7 +84,7 @@ export default function App({ navigation }) {
     },
     []
   );
-  console.log(product)
+  // console.log(product)
   return (
     <PaperProvider>
       <ImageBackground

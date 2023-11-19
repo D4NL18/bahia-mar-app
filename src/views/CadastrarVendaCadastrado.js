@@ -39,9 +39,8 @@ export default function App({ navigation }) {
     }).then((res) => res.json())
       .then((res) => {
         if (res.error) {
-          console.log("Deu erro, amigão")
+          console.log(`Request Error: ${res.error}`);
         } else {
-          console.log(res);
           setState(res);
         }
       })
@@ -84,14 +83,14 @@ export default function App({ navigation }) {
           <Botao
             texto="Seguir"
             tipo="destaque"
-            onPress={() => console.log(sale_conf) /*navigation.navigate('FazerPedidoFuncionario', {
+            onPress={() => navigation.navigate('FazerPedidoFuncionario', {
               jsonData: {
                 funcionario: funcionario,
                 veiculo: veiculo,
                 cliente: cliente,
                 pagamento: pagamento
               }
-            })*/}
+            })}
           />
         </View>
       </ImageBackground>

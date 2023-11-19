@@ -52,7 +52,7 @@ export default function App({ navigation }) {
           // deu bom, proseguir...
           // console.log(res);
           login(res.token);
-          if(res.isEmployee == false){
+          if(res.isEmployee){
             navigation.navigate("Menu");
           } else{
             navigation.navigate("FazerPedido");

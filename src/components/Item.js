@@ -16,10 +16,10 @@ export default function Botao(props) {
     <View style={styles.Container}>
       <View style={styles.ImageContainer}>
         <Text style={styles.Text}>Total do Produto:</Text>
-        <Text style={styles.Text}>R${resultado}</Text>
+        <Text style={styles.Text}>R${resultado.toFixed(2)}</Text>
         {/*<Image source={props.image} style={styles.Image} />*/}
         <Text style={styles.Text}>{NOME}</Text>
-        <Text style={styles.Text}>Preço: R${PRECO}</Text>
+        <Text style={styles.Text}>Preço: R${PRECO.toFixed(2)}</Text>
       </View>
       <View style={styles.Quantidade}>
         <IconButton
