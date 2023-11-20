@@ -75,10 +75,12 @@ export default function App({ navigation }) {
           <View style={{ width: largura, alignItems: "center" }}>
             <Titulo titulo="Cadastrar Venda" tipo="medio" />
           </View>
-          <RNPickerSelect onValueChange={(value) => {sale_conf.funcionario = value}} items={funcionario_select} />
-          <RNPickerSelect onValueChange={(value) => {sale_conf.veiculo = value}} items={veiculo_select} />
-          <RNPickerSelect onValueChange={(value) => {sale_conf.cliente = value}} items={cliente_select} />
-          <RNPickerSelect onValueChange={(value) => {sale_conf.pagamento = value}} items={pagamento_select} />
+          <View style={styles.container}>
+            <RNPickerSelect style={pickerStyle} onValueChange={(value) => { sale_conf.funcionario = value }} items={funcionario_select} />
+            <RNPickerSelect onValueChange={(value) => { sale_conf.veiculo = value }} items={veiculo_select} />
+            <RNPickerSelect onValueChange={(value) => { sale_conf.cliente = value }} items={cliente_select} />
+            <RNPickerSelect onValueChange={(value) => { sale_conf.pagamento = value }} items={pagamento_select} />
+          </View>
 
           <Botao
             texto="Seguir"
@@ -109,4 +111,31 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundImage: background,
   },
+  container: {
+    width: largura*0.8,
+  }
+});
+
+
+const pickerStyle = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
+    color: 'black',
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 0.5,
+    borderColor: 'purple',
+    borderRadius: 8,
+    color: 'black',
+    paddingRight: 30, // to ensure the text is never behind the icon
+  }
 });

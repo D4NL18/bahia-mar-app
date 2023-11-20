@@ -39,7 +39,6 @@ export default function App({ navigation, route }) {
 
   const [aguardandoAsync, setAguardandoAsync] = useState(false);
   const [campos, setCampos] = useState(camposPadrao);
-  const [token, setToken] = useState(null);
 
   function changeSenha(texto = "") {
     const senhaRegex = /^[a-zA-Z0-9!@#$&]+$/;
@@ -103,16 +102,9 @@ export default function App({ navigation, route }) {
 
   useEffect(() => {
     navigation.addListener("focus", () => {
-      logout();
-      setToken("");
-      //testarLogin(navigation.navigate, false);
-    });
-    navigation.addListener("blur", () => {
       setCampos(camposPadrao);
     });
   });
-
-  if (token === null) return <></>;
 
   return (
     <PaperProvider>
