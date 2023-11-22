@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import {
   Dimensions,
   StyleSheet,
@@ -13,6 +14,7 @@ import { PaperProvider } from "react-native-paper";
 import Titulo from "../components/Titulo";
 import Item from "../components/Item";
 import Botao from "../components/Botao";
+import Mod from "../components/Mod";
 
 import background from "../images/background.png";
 import Teste from "../images/teste.png";
@@ -22,6 +24,10 @@ const largura = Dimensions.get("screen").width;
 
 export default function App({ route, navigation }) {
   const items = route.params.jsonData;
+
+  const [visible, setVisible] = useState("");
+  const showModal = () => setVisible(true);
+  const hideModal = () => {setVisible(false); navigation.navigate("FazerPedido");};
 
   const Card = (props) => (
     <View style={styles.card}>
@@ -48,7 +54,7 @@ export default function App({ route, navigation }) {
           >
             <View style={styles.containerCard}>
               {items.map((item, index) => (
-                <Card title={item.NOME} quantidade={item.COUNT} preco={item.PRECO * item.COUNT}></Card>
+                <Card key={index} title={item.NOME} quantidade={item.COUNT} preco={item.PRECO * item.COUNT}></Card>
               ))}
             </View>
           </ScrollView>
@@ -56,14 +62,15 @@ export default function App({ route, navigation }) {
         <View style={styles.botao}>
           <Botao
             tipo="destaque"
-            texto="Finalizar Compra"
+            texto="Finalizar Pedido"
             onPress={() => {
               // Cliente
               // função de registrar pedido;
-              navigation.navigate("FazerPedido");
+              showModal();
             }}
           />
         </View>
+        <Mod texto="Pedido realizado com sucesso" visible={visible} dismiss={hideModal} botao="Seguir" />
       </ImageBackground>
     </PaperProvider>
   );

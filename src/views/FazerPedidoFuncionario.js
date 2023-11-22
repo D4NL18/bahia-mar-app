@@ -25,7 +25,7 @@ const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;
 
 export default function App({ route, navigation }) {
-  const sale_register = route.params.jsonData;
+  const sale_register = route.params.jsonData.sale_conf;
 
   const [product, setProduct] = useState(undefined);
   const [aguardandoAsync, setAguardandoAsync] = useState(false);
@@ -72,6 +72,7 @@ export default function App({ route, navigation }) {
   }, []);
 
   if (!product) {
+    console.log(sale_register)
     fetch_products();
     return <></>;
   }

@@ -76,7 +76,7 @@ export default function App({ navigation }) {
             <Titulo titulo="Cadastrar Venda" tipo="medio" />
           </View>
           <View style={styles.container}>
-            <RNPickerSelect style={pickerStyle} onValueChange={(value) => { sale_conf.funcionario = value }} items={funcionario_select} />
+            <RNPickerSelect onValueChange={(value) => { sale_conf.funcionario = value }} items={funcionario_select} />
             <RNPickerSelect onValueChange={(value) => { sale_conf.veiculo = value }} items={veiculo_select} />
             <RNPickerSelect onValueChange={(value) => { sale_conf.cliente = value }} items={cliente_select} />
             <RNPickerSelect onValueChange={(value) => { sale_conf.pagamento = value }} items={pagamento_select} />
@@ -85,14 +85,11 @@ export default function App({ navigation }) {
           <Botao
             texto="Seguir"
             tipo="destaque"
-            onPress={() => navigation.navigate('FazerPedidoFuncionario', {
+            onPress={() => {console.log(sale_conf); navigation.navigate('FazerPedidoFuncionario', {
               jsonData: {
-                funcionario: funcionario,
-                veiculo: veiculo,
-                cliente: cliente,
-                pagamento: pagamento
+                sale_conf: sale_conf
               }
-            })}
+            })}}
           />
         </View>
       </ImageBackground>

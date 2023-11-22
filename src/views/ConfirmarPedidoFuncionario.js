@@ -15,10 +15,11 @@ import { PaperProvider } from "react-native-paper";
 import Titulo from "../components/Titulo";
 import Item from "../components/Item";
 import Botao from "../components/Botao";
+import Mod from "../components/Mod";
 
 import background from "../images/background.png";
 import Teste from "../images/teste.png";
-import { getTokenSessao } from "../services/API.js";
+import { getTokenSessao, handleErrorBackend } from "../services/API.js";
 
 const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;
@@ -26,11 +27,18 @@ const largura = Dimensions.get("screen").width;
 export default function App({ route, navigation }) {
     const sale_register = route.params.jsonData.sale_register;
     const items = route.params.jsonData.product;
+    
     var amount_paid = 0;
-    for(i in items){
-        amount_paid += (i.PRECO * i.COUNT);
+    for (i of items) {
+        amount_paid = Number(amount_paid + (Number(i.PRECO) * Number(i.COUNT)));
     }
+    console.log(`Amount paid: ${amount_paid}`);
+
     const [aguardandoAsync, setAguardandoAsync] = useState(false);
+
+    const [visible, setVisible] = useState("");
+    const showModal = () => setVisible(true);
+    const hideModal = () => {setVisible(false); navigation.navigate("Menu")};
 
     const Card = (props) => (
         <View style={styles.card}>
@@ -70,7 +78,7 @@ export default function App({ route, navigation }) {
                     handleErrorBackend(navigation.navigate, res.error);
                 } else {
                     // deu bom, proseguir...
-                    navigation.navigate("Menu");
+                    showModal();
                 }
             })
             .catch((err) => {
@@ -97,7 +105,7 @@ export default function App({ route, navigation }) {
                     >
                         <View style={styles.containerCard}>
                             {items.map((item, index) => (
-                                <Card title={item.NOME} quantidade={item.COUNT} preco={item.PRECO * item.COUNT}></Card>
+                                <Card key={index} title={item.NOME} quantidade={item.COUNT} preco={item.PRECO * item.COUNT}></Card>
                             ))}
                         </View>
                     </ScrollView>
@@ -107,11 +115,12 @@ export default function App({ route, navigation }) {
                         tipo="destaque"
                         texto="Finalizar Compra"
                         onPress={() => {
-                            console.log("Pedido Concluído")
-                            navigation.navigate("Menu");
+                            showModal();
+                            //comprar();
                         }}
                     />
                 </View>
+                <Mod texto="Compra realizada com sucesso" visible={visible} dismiss={hideModal} botao="Seguir" />
             </ImageBackground>
         </PaperProvider>
     );

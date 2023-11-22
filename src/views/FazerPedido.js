@@ -116,7 +116,7 @@ export default function App({ navigation }) {
         <View style={styles.botao}>
           <Botao
             tipo="destaque"
-            texto="Finalizar Compra"
+            texto="Finalizar Pedido"
             onPress={() => {
               navigation.navigate("ConfirmarPedido", {jsonData: product});
               // console.log(product);
