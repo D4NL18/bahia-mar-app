@@ -16,7 +16,7 @@ import {
   ScrollView,
 } from "react-native";
 import { PaperProvider } from "react-native-paper";
-import { getTokenSessao, handleErrorBackend, logout } from "../services/API";
+import { handleErrorBackend, logout } from "../services/API";
 
 const altura = Dimensions.get("screen").height;
 const largura = Dimensions.get("screen").width;
@@ -33,12 +33,10 @@ const camposPadrao = {
   senha: "",
 };
 
-export default function App({ navigation, route }) {
-
-  const sale_register = route.params.jsonData;
-
+export default function App({ navigation }) {
   const [aguardandoAsync, setAguardandoAsync] = useState(false);
   const [campos, setCampos] = useState(camposPadrao);
+  const [token, setToken] = useState(null);
 
   function changeSenha(texto = "") {
     const senhaRegex = /^[a-zA-Z0-9!@#$&]+$/;
@@ -66,7 +64,7 @@ export default function App({ navigation, route }) {
 
     setAguardandoAsync(true);
     const route_handler = BACKEND_ROUTE;
-    fetch(`${route_handler}/clientes/inserir/${getTokenSessao()}`, {
+    fetch(`${route_handler}/app/cadastrar_usuario`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -91,6 +89,7 @@ export default function App({ navigation, route }) {
         } else {
           // deu bom, proseguir...
           alert("Cadastro concluído");
+          navigation.navigate("Login");
         }
       })
       .catch((err) => {
@@ -102,9 +101,16 @@ export default function App({ navigation, route }) {
 
   useEffect(() => {
     navigation.addListener("focus", () => {
+      logout();
+      setToken("");
+      //testarLogin(navigation.navigate, false);
+    });
+    navigation.addListener("blur", () => {
       setCampos(camposPadrao);
     });
   });
+
+  if (token === null) return <></>;
 
   return (
     <PaperProvider>
@@ -115,7 +121,7 @@ export default function App({ navigation, route }) {
       >
         <SafeAreaView style={styles.container}>
           <View style={styles.titulo}>
-            <Titulo titulo="Cadastrar Venda" tipo="medio" />
+            <Titulo titulo="Cadastro" tipo="medio" />
           </View>
           <ScrollView style={styles.scrollview}>
             <Input
@@ -192,19 +198,7 @@ export default function App({ navigation, route }) {
             disabled={aguardandoAsync}
             texto="Concluir"
             tipo="destaque"
-            onPress={
-              () => {
-                cadastrar;
-                navigation.navigate('FazerPedidoFuncionario', {
-                  jsonData: {
-                    funcionario: sale_register.funcionario,
-                    veiculo: sale_register.veiculo,
-                    cliente: 0,
-                    pagamento: sale_register.pagamento
-                  }
-                })
-              }
-            }
+            onPress={cadastrar}
           />
         </SafeAreaView>
       </ImageBackground>

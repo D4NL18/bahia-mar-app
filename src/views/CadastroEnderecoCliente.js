@@ -31,7 +31,7 @@ export default function App({ navigation }) {
           style={{ flex: 10, justifyContent: "center", alignItems: "center" }}
         >
           <View style={{ width: largura, alignItems: "center" }}>
-            <Titulo titulo="Cadastrar Venda" tipo="medio" />
+            <Titulo titulo="Cadastro" tipo="medio" />
           </View>
           <Input label="CEP"></Input>
           <Input label="Rua"></Input>
@@ -41,7 +41,7 @@ export default function App({ navigation }) {
           <Botao
             texto="Seguir"
             tipo="destaque"
-            onPress={() => navigation.navigate("FazerPedidoFuncionario")}
+            onPress={() => navigation.navigate("Login")}
           />
         </View>
       </ImageBackground>
